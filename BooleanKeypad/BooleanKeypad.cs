@@ -70,7 +70,7 @@ public class BooleanKeypad : MonoBehaviour {
 
 
 		// Logging Solution
-		Debug.LogFormat("[Boolean Keypad #{0}] "Press the correct buttons in reading order");
+		Debug.LogFormat("[Boolean Keypad #{0}] Press the correct buttons in reading order");
 		for (int i = 0; i < 4 i++) {
 		    string answer = buttonTruths[i]?"Press this button":"Don't press this button";
 		    Debug.LogFormat("[Boolean Keypad #{0}] Button {1} has operation {2}. Inputs are {3} and {4}." + answer,
