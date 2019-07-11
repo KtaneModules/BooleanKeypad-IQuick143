@@ -55,26 +55,21 @@ public class BooleanKeypad : MonoBehaviour {
 
 		Operations[] buttonOperations = new Operations[4];
 
+		// Logging Solution
+		Debug.LogFormat("[Boolean Keypad #{0}] Press the correct buttons in reading order", moduleId);
 		for (int i = 0; i < 4; i++) {
 			bool[] OPvalues = CalculateOperations(ledStates[i % 2], ledStates[2 + i / 2]);
 			int choice = Random.Range(0, 3);
 			buttonOperations[i] = (Operations) choice + ((OPvalues[choice] == buttonTruths[i])?0:3);
 
-			// Logging button symbols
 			string label = magicLetters[(int) buttonOperations[i]][Random.Range(0, 6)];
-			string op = buttonOperations[i].ToString();
-			Debug.LogFormat("[Boolean Keypad #{0}] Button {1} has label {2} and operation {3}", moduleId, i+1, label, op);
-
 			this.Buttons[i].SetLabel(label);
-		}
-
-
-		// Logging Solution
-		Debug.LogFormat("[Boolean Keypad #{0}] Press the correct buttons in reading order", moduleId);
-		for (int i = 0; i < 4; i++) {
-		    string answer = buttonTruths[i]?"Press this button":"Don't press this button";
-		    Debug.LogFormat("[Boolean Keypad #{0}] Button {1} has operation {2}. Inputs are {3} and {4}. " + answer, moduleId,
-					  i+1, buttonOperations[i].ToString(), ledStates[i % 2], ledStates[2 + i / 2]);
+			
+			// Logging buttons
+			string op = buttonOperations[i].ToString();
+			string answer = buttonTruths[i]?"Press this button":"Don't press this button";
+		    Debug.LogFormat("[Boolean Keypad #{0}] Button {1} has label {2} and operation {3}. Inputs are {4} and {5}. " + answer, moduleId, i+1, label, op,
+				ledStates[i % 2], ledStates[2 + i / 2]);
 		}
 	}
 
