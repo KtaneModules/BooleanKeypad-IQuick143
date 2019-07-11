@@ -50,8 +50,8 @@ public class BooleanKeypad : MonoBehaviour {
 		}
 
 		// Logging LEDs
-		Debug.LogFormat("[Boolean Keypad #{0}] The top LEDs are {1} then {2}, moduleId, ledStates[0], ledStates[1]);
-		Debug.LogFormat("[Boolean Keypad #{0}] The right LEDs are {1} then {2}, moduleId, ledStates[2], ledStates[3]);
+		Debug.LogFormat("[Boolean Keypad #{0}] The top LEDs are {1} then {2}", moduleId, ledStates[0], ledStates[1]);
+		Debug.LogFormat("[Boolean Keypad #{0}] The right LEDs are {1} then {2}", moduleId, ledStates[2], ledStates[3]);
 
 		Operations[] buttonOperations = new Operations[4];
 
@@ -74,7 +74,7 @@ public class BooleanKeypad : MonoBehaviour {
 		for (int i = 0; i < 4 i++) {
 		    string answer = buttonTruths[i]?"Press this button":"Don't press this button";
 		    Debug.LogFormat("[Boolean Keypad #{0}] Button {1} has operation {2}. Inputs are {3} and {4}." + answer,
-					  i, buttonOperations[i].toString(), ledStates[i % 2], ledStates[2 + i / 2]);
+					  i+1, buttonOperations[i].toString(), ledStates[i % 2], ledStates[2 + i / 2]);
 		}
 	}
 
@@ -87,10 +87,10 @@ public class BooleanKeypad : MonoBehaviour {
 			for (int i = 0; i < 4; i++) {
 				if (this.buttonTruths[i] && !this.pressedButtons[i]) {
 					if (i < id) {
-						Debug.LogFormat("[Boolean Keypad #{0}] "Button {1} pressed. This is not the next true button in reading order. Button {2} expected instead.", moduleId, id+1, i+1);
+						Debug.LogFormat("[Boolean Keypad #{0}] Button {1} pressed. This is not the next true button in reading order. Button {2} expected instead.", moduleId, id+1, i+1);
 						Strike();
 					}
-					Debug.LogFormat("[Boolean Keypad #{0}] "Button {1} pressed. This is correct.", moduleId, id+1);
+					Debug.LogFormat("[Boolean Keypad #{0}] Button {1} pressed. This is correct.", moduleId, id+1);
 					return;
 				}
 			}
@@ -98,7 +98,7 @@ public class BooleanKeypad : MonoBehaviour {
 			this.moduleSolved = true;
 			this.module.HandlePass();
 		} else {
-			Debug.LogFormat("[Boolean Keypad #{0}] "Button {1} pressed. This is button is false. It should not be pressed.", moduleId, id+1);
+			Debug.LogFormat("[Boolean Keypad #{0}] Button {1} pressed. This is button is false. It should not be pressed at all.", moduleId, id+1);
 			Strike();
 		}
 	}
