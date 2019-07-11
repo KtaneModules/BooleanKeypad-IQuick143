@@ -61,8 +61,8 @@ public class BooleanKeypad : MonoBehaviour {
 			buttonOperations[i] = (Operations) choice + ((OPvalues[choice] == buttonTruths[i])?0:3);
 
 			// Logging button symbols
-			String label = magicLetters[(int) buttonOperations[i]][Random.Range(0, 6)];
-			String op = buttonOperations[i].toString();
+			string label = magicLetters[(int) buttonOperations[i]][Random.Range(0, 6)];
+			string op = buttonOperations[i].ToString();
 			Debug.LogFormat("[Boolean Keypad #{0}] Button {1} has label {2} and operation {3}", moduleId, i+1, label, op);
 
 			this.Buttons[i].SetLabel(label);
@@ -70,11 +70,11 @@ public class BooleanKeypad : MonoBehaviour {
 
 
 		// Logging Solution
-		Debug.LogFormat("[Boolean Keypad #{0}] Press the correct buttons in reading order");
-		for (int i = 0; i < 4 i++) {
+		Debug.LogFormat("[Boolean Keypad #{0}] Press the correct buttons in reading order", moduleId);
+		for (int i = 0; i < 4; i++) {
 		    string answer = buttonTruths[i]?"Press this button":"Don't press this button";
-		    Debug.LogFormat("[Boolean Keypad #{0}] Button {1} has operation {2}. Inputs are {3} and {4}." + answer,
-					  i+1, buttonOperations[i].toString(), ledStates[i % 2], ledStates[2 + i / 2]);
+		    Debug.LogFormat("[Boolean Keypad #{0}] Button {1} has operation {2}. Inputs are {3} and {4}. " + answer, moduleId,
+					  i+1, buttonOperations[i].ToString(), ledStates[i % 2], ledStates[2 + i / 2]);
 		}
 	}
 
@@ -89,12 +89,14 @@ public class BooleanKeypad : MonoBehaviour {
 					if (i < id) {
 						Debug.LogFormat("[Boolean Keypad #{0}] Button {1} pressed. This is not the next true button in reading order. Button {2} expected instead.", moduleId, id+1, i+1);
 						Strike();
+					} else {
+						Debug.LogFormat("[Boolean Keypad #{0}] Button {1} correctly pressed. Next button is {2}.", moduleId, id+1, i+1);
 					}
-					Debug.LogFormat("[Boolean Keypad #{0}] Button {1} pressed. This is correct.", moduleId, id+1);
 					return;
 				}
 			}
 
+			Debug.LogFormat("[Boolean Keypad #{0}] Last button {1} correctly pressed. Module is now solved.", moduleId, id+1);
 			this.moduleSolved = true;
 			this.module.HandlePass();
 		} else {
@@ -105,7 +107,7 @@ public class BooleanKeypad : MonoBehaviour {
 
 	private void Strike() {
 		if (this.moduleSolved) return;
-		Debug.LogFormat("[Boolean Keypad #{0}] A strike was received. All previous inputs are cleared.");
+		Debug.LogFormat("[Boolean Keypad #{0}] A strike was received. All previous inputs are cleared.", moduleId);
 		for (int i = 0; i < 4; i++) {
 			this.Buttons[i].FlashRED();
 		}
