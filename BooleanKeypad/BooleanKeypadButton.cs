@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(KMSelectable))]
-public class Button : MonoBehaviour {
+public class BooleanKeypadButton : MonoBehaviour {
 	[SerializeField]
 	private Material OFF;
 	[SerializeField]
@@ -15,7 +15,7 @@ public class Button : MonoBehaviour {
 	[SerializeField]
 	private MeshRenderer LED;
 	[SerializeField]
-	private TextMesh text;
+	private SpriteRenderer label;
 
 	// Use this for initialization
 	void Awake() {
@@ -37,8 +37,8 @@ public class Button : MonoBehaviour {
 		this.LED.material = this.OFF;
 	}
 
-	public void SetLabel(string label) {
-		this.text.text = label;
+	public void SetLabel(Sprite label) {
+		this.label.sprite = label;
 	}
 
 	private bool OnInteract() {

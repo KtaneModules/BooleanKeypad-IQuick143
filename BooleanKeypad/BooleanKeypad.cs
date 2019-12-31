@@ -5,7 +5,9 @@ public class BooleanKeypad : MonoBehaviour {
 	[SerializeField]
 	private LED[] LEDs;
 	[SerializeField]
-	private Button[] Buttons;
+	private BooleanKeypadButton[] Buttons;
+	[SerializeField]
+	private Sprite[] Symbols;
 	[SerializeField]
 	private KMBombModule module;
 	private static string[][] magicLetters = {
@@ -61,9 +63,10 @@ public class BooleanKeypad : MonoBehaviour {
 			bool[] OPvalues = CalculateOperations(ledStates[i % 2], ledStates[2 + i / 2]);
 			int choice = Random.Range(0, 3);
 			buttonOperations[i] = (Operations) choice + ((OPvalues[choice] == buttonTruths[i])?0:3);
-
-			string label = magicLetters[(int) buttonOperations[i]][Random.Range(0, 6)];
-			this.Buttons[i].SetLabel(label);
+			
+			int symbolIndex = Random.Range(0, 6);
+			string label = magicLetters[(int) buttonOperations[i]][symbolIndex];
+			this.Buttons[i].SetLabel(Symbols[6*((int) buttonOperations[i])+symbolIndex]);
 			
 			// Logging buttons
 			string op = buttonOperations[i].ToString();
